@@ -73,6 +73,7 @@ association {
 <ref refid="7dc84b60-40c0-11ed-821e-939c9d1cc761"/>
 <ref refid="0c3554c9-425b-11ed-b543-e5cd7456de47"/>
 <ref refid="066a6cc2-425b-11ed-ae09-e5cd7456de47"/>
+<ref refid="1c5a4c9e-4261-11ed-8f40-85850a7e6386"/>
 <ref refid="b6e2b03e-40f2-11ed-9b65-a97c3b013334"/>
 <ref refid="be0d5aaa-40f2-11ed-a9d3-a97c3b013334"/>
 </reflist>
@@ -94,10 +95,10 @@ association {
 <val>(0.0, -10.611114501953125)</val>
 </top-left>
 <width>
-<val>240.3132803926551</val>
+<val>272.0</val>
 </width>
 <height>
-<val>185.0</val>
+<val>202.0</val>
 </height>
 <diagram>
 <ref refid="4e901399-40be-11ed-8fe3-39ab5448b79b"/>
@@ -444,7 +445,7 @@ association {
 <val>(1.0, 0.0, 0.0, 1.0, -2335.8817248873506, -427.62058347406935)</val>
 </matrix>
 <points>
-<val>[(197.96004701086895, 197.74643430784656), (-80.60180963851235, -24.714942031225178)]</val>
+<val>[(197.96004701086895, 197.74643430784656), (-49.41335621409553, -25.33680455151398)]</val>
 </points>
 <head-connection>
 <ref refid="e529305b-40f1-11ed-8f91-a97c3b013334"/>
@@ -675,5 +676,13 @@ association {
 <typeValue>
 <val>time</val>
 </typeValue>
+</Property>
+<Property id="1c5a4c9e-4261-11ed-8f40-85850a7e6386">
+<class_>
+<ref refid="6f447146-40be-11ed-a55a-39ab5448b79b"/>
+</class_>
+<name>
+<val>+ account_balance: decimal(13, 2)</val>
+</name>
 </Property>
 </gaphor>
