@@ -14,7 +14,7 @@ class ApiToken extends Model
     /**
      * The attributes that should be casted.
      *
-     * @var array<int, string>
+     * @var array<string, mixed>
      */
     protected $casts = [
         'created_at' => 'datetime',
