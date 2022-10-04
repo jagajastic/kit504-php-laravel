@@ -91,13 +91,13 @@ association {
 </Class>
 <ClassItem id="6f450e91-40be-11ed-b1c7-39ab5448b79b">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -2661.0295185383275, -442.3462735236302)</val>
+<val>(1.0, 0.0, 0.0, 1.0, -2678.818458968015, -442.3462735236302)</val>
 </matrix>
 <top-left>
 <val>(0.0, -10.611114501953125)</val>
 </top-left>
 <width>
-<val>328.0</val>
+<val>332.36210032066674</val>
 </width>
 <height>
 <val>202.0</val>
@@ -254,7 +254,7 @@ association {
 </Class>
 <ClassItem id="e529305b-40f1-11ed-8f91-a97c3b013334">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -2137.9216778764817, -260.9859775155049)</val>
+<val>(1.0, 0.0, 0.0, 1.0, -2125.224534321794, -367.676926001833)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -315,7 +315,7 @@ association {
 </EnumerationLiteral>
 <Class id="a86d0267-40f2-11ed-be3f-a97c3b013334">
 <name>
-<val>menus</val>
+<val>products</val>
 </name>
 <ownedAttribute>
 <reflist>
@@ -336,7 +336,7 @@ association {
 </Class>
 <ClassItem id="a86d7837-40f2-11ed-abdc-a97c3b013334">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -2669.5648345947266, -227.3640013310951)</val>
+<val>(1.0, 0.0, 0.0, 1.0, -2574.30794690309, -209.27734740841026)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -447,7 +447,7 @@ association {
 <val>(1.0, 0.0, 0.0, 1.0, -2335.8817248873506, -427.62058347406935)</val>
 </matrix>
 <points>
-<val>[(197.96004701086895, 197.74643430784656), (1.7538465489460577, -25.33680455151398)]</val>
+<val>[(210.65719056555645, 59.94365747223634), (-10.574633759997596, -25.33680455151398)]</val>
 </points>
 <head-connection>
 <ref refid="e529305b-40f1-11ed-8f91-a97c3b013334"/>
@@ -464,7 +464,7 @@ association {
 </reflist>
 </memberEnd>
 <name>
-<val>shop_user</val>
+<val></val>
 </name>
 <ownedEnd>
 <reflist>
@@ -547,7 +547,7 @@ association {
 <val>(1.0, 0.0, 0.0, 1.0, -2473.7101728130297, -181.94692806279045)</val>
 </matrix>
 <points>
-<val>[(17.34295603619057, -6.534420378376048), (368.7672882080078, 88.96095054728556)]</val>
+<val>[(112.59984372782719, -22.88094420623827), (348.4856384912355, -17.72999793904262)]</val>
 </points>
 <head-connection>
 <ref refid="a86d7837-40f2-11ed-abdc-a97c3b013334"/>
@@ -564,7 +564,7 @@ association {
 </reflist>
 </memberEnd>
 <name>
-<val>menu_shop</val>
+<val></val>
 </name>
 <ownedEnd>
 <reflist>
@@ -711,7 +711,7 @@ association {
 </Class>
 <ClassItem id="8e117f4a-43dd-11ed-832a-33b1d5bc7f20">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -2480.126226525735, -657.7345056924207)</val>
+<val>(1.0, 0.0, 0.0, 1.0, -2480.540960412454, -657.7345056924207)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
