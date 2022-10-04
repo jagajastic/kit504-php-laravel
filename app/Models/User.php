@@ -14,15 +14,6 @@ class User extends Model
     use ModelEssentialsTrait;
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, mixed>
-     */
-    protected $casts = [
-        'account_balance' => 'decimal:2',
-    ];
-
-    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
@@ -30,4 +21,14 @@ class User extends Model
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * Returns the user's account balance in USD.
+     *
+     * @return float
+     */
+    public function getAccountBalanceUsdAttribute()
+    {
+        return $this->account_balance / 100;
+    }
 }

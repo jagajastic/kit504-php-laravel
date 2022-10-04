@@ -13,4 +13,9 @@ class UserType extends BaseEnum
     public const UTAS_STUDENT = 'UTAS_STUDENT';
 
     public const UTAS_EMPLOYEE = 'UTAS_EMPLOYEE';
+
+    public static function normalUsers()
+    {
+        return [UserType::UTAS_EMPLOYEE, UserType::UTAS_STUDENT];
+    }
 }

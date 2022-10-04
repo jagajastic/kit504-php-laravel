@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\User;
+use App\Enums\UserType;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -63,9 +64,21 @@ class AuthController extends Controller
             'value' => $uuid,
         ]);
 
+        $hidden = ['id'];
+
+        $included = [
+            'api_token' => $uuid,
+        ];
+
+        if (!\in_array($user->type, UserType::normalUsers())) {
+            $hidden[] = 'account_balance';
+        } else {
+            $included['account_balance_usd'] = $user->account_balance_usd;
+        }
+
         $attributes = collect($user)
-            ->except('id')
-            ->put('api_token', $uuid)
+            ->except($hidden)
+            ->merge($included)
             ->toArray();
 
         $data = [

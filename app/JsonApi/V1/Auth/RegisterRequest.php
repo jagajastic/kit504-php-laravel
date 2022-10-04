@@ -21,7 +21,7 @@ class RegisterRequest extends FormRequest
             'data.attributes.password'      => ['required', 'min:8'],
             'data.attributes.type'          => [
                 'required',
-                Rule::in([UserType::UTAS_EMPLOYEE, UserType::UTAS_STUDENT]),
+                Rule::in(UserType::normalUsers()),
             ],
         ];
     }
