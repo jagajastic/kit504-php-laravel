@@ -10,3 +10,11 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+use LaravelJsonApi\Laravel\Facades\JsonApiRoute;
+use LaravelJsonApi\Laravel\Routing\ResourceRegistrar;
+
+JsonApiRoute::server('v1')
+    ->prefix('v1')
+    ->resources(function (ResourceRegistrar $server) {
+    });

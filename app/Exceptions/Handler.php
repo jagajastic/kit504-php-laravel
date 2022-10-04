@@ -22,9 +22,7 @@ class Handler extends ExceptionHandler
      *
      * @var array<int, class-string<\Throwable>>
      */
-    protected $dontReport = [
-        JsonApiException::class,
-    ];
+    protected $dontReport = [];
 
     /**
      * A list of the inputs that are never flashed to the session on validation exceptions.
@@ -44,6 +42,10 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
+        $this->reportable(function (JsonApiException $ex) {
+            return $ex->is5xx();
+        });
+
         $this->renderable(
             ExceptionParser::make()->renderable()
         );
