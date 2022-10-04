@@ -12,9 +12,7 @@ return [
     |
     */
 
-    'defaults' => [
-        'guard' => 'web',
-    ],
+    'defaults' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -34,9 +32,9 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver'   => 'session',
+        'api' => [
             'provider' => 'users',
+            'driver'   => 'api-token',
         ],
     ],
 
