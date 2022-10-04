@@ -2,21 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEssentialsTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApiToken extends Model
 {
     use HasFactory;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'value',
-    ];
+    use ModelEssentialsTrait;
 
     /**
      * The attributes that should be casted.

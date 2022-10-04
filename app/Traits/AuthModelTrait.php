@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\ApiToken;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait AuthModelTrait
 {
@@ -39,8 +40,16 @@ trait AuthModelTrait
     /**
      * Get all of the user's API tokens.
      */
-    public function apiTokens()
+    public function apiTokens(): MorphMany
     {
         return $this->morphMany(ApiToken::class, 'user');
+    }
+
+    /**
+     * Returns the attributes that should be hidden for serialization.
+     */
+    public function hidden()
+    {
+        return \array_merge(['password'], $this->hidden);
     }
 }
