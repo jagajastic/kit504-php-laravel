@@ -70,10 +70,10 @@ class AuthController extends Controller
             'api_token' => $uuid,
         ];
 
-        if (!\in_array($user->type, UserType::normalUsers())) {
-            $hidden[] = 'account_balance';
-        } else {
+        if (\in_array($user->type, UserType::normalUsers())) {
             $included['account_balance_usd'] = $user->account_balance_usd;
+        } else {
+            $hidden[] = 'account_balance';
         }
 
         $attributes = collect($user)
