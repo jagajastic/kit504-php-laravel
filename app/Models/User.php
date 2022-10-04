@@ -2,25 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\AuthModelTrait;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Model
 {
     use HasFactory;
-    use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    use AuthModelTrait;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -30,11 +19,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [];
 }
