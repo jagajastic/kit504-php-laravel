@@ -20,7 +20,7 @@ return new class() extends Migration {
             $table->enum('type', UserType::values());
             $table->string('email')->unique();
             $table->string('password');
-            $table->decimal('account_balance', 13, 2)->default(0.00);
+            $table->bigInteger('account_balance')->default(0);
             $table->timestamps();
         });
     }
