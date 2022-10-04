@@ -44,12 +44,4 @@ trait AuthModelTrait
     {
         return $this->morphMany(ApiToken::class, 'user');
     }
-
-    /**
-     * Returns the attributes that should be hidden for serialization.
-     */
-    public function hidden()
-    {
-        return \array_merge(['password'], $this->hidden);
-    }
 }

@@ -2,20 +2,30 @@
 
 namespace App\JsonApi\V1\Auth;
 
-use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends ResourceRequest
+class LoginRequest extends FormRequest
 {
     /**
-     * Get the validation rules for the resource.
-     *
-     * @return array
+     * @inheritDoc
      */
     public function rules(): array
     {
         return [
-            'email'    => ['required', 'email'],
-            'password' => ['required', 'min:8'],
+            'type'                     => 'in:auth',
+            'data.attributes.email'    => ['required', 'email'],
+            'data.attributes.password' => ['required', 'min:8'],
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function attributes(): array
+    {
+        return [
+            'data.attributes.email'    => 'email',
+            'data.attributes.password' => 'password',
         ];
     }
 }

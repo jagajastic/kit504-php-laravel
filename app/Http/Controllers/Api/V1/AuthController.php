@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\JsonApi\V1\Auth\LoginRequest;
-use App\JsonApi\V1\Auth\RegisterRequest;
 use LaravelJsonApi\Core\Document\Error;
-use Illuminate\Contracts\Support\Responsable;
-use LaravelJsonApi\Core\Responses\DataResponse;
+use App\JsonApi\V1\Auth\RegisterRequest;
+use function collect;
 
 class AuthController extends Controller
 {
@@ -24,9 +24,11 @@ class AuthController extends Controller
     /**
      * Login a user.
      */
-    public function login(LoginRequest $request): Responsable
+    public function login(LoginRequest $request): JsonResponse|Error
     {
-        $user = User::getUserBy($request->email, $request->password);
+        $email    = $request->input('data.attributes.email');
+        $password = $request->input('data.attributes.password');
+        $user     = User::getUserBy($email, $password);
 
         if ($user === \null) {
             return Error::fromArray([
@@ -41,9 +43,9 @@ class AuthController extends Controller
     /**
      * Register a user.
      */
-    public function register(RegisterRequest $request): Responsable
+    public function register(RegisterRequest $request): JsonResponse
     {
-        $user = User::create($request->validated());
+        $user = User::create($request->input('data.attributes'));
 
         $user->refresh();
 
@@ -53,7 +55,7 @@ class AuthController extends Controller
     /**
      * Get authentication response with "user" and "token" properties.
      */
-    public function authResponse(User $user): Responsable
+    public function authResponse(User $user): JsonResponse
     {
         $uuid = Str::orderedUuid()->toString();
 
@@ -61,11 +63,22 @@ class AuthController extends Controller
             'value' => $uuid,
         ]);
 
+        $attributes = collect($user)
+            ->except('id')
+            ->put('api_token', $uuid)
+            ->toArray();
+
         $data = [
-            'user'  => $user,
-            'token' => $uuid,
+            'jsonapi' => [
+                'version' => '1.0',
+            ],
+            'data' => [
+                'type'       => 'auth',
+                'id'         => $user->id,
+                'attributes' => $attributes,
+            ],
         ];
 
-        return DataResponse::make($data)->didCreate();
+        return new JsonResponse($data, JsonResponse::HTTP_CREATED);
     }
 }

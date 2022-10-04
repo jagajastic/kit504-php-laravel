@@ -12,4 +12,8 @@ class User extends Model
     use HasFactory;
     use AuthModelTrait;
     use ModelEssentialsTrait;
+
+    protected $hidden = [
+        'password',
+    ];
 }
