@@ -15,6 +15,8 @@ return new class() extends Migration {
         Schema::create('shops', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
+            $table->time('opening_time');
+            $table->time('closing_time');
             $table->timestamps();
         });
     }
