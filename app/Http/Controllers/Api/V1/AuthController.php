@@ -70,11 +70,16 @@ class AuthController extends Controller
             'api_token' => $uuid,
         ];
 
-        if (\in_array($user->type, UserType::normalUsers())) {
-            $hidden[]                        = 'shop_id';
+        $is_normal_user = \in_array($user->type, UserType::normalUsers());
+
+        if ($is_normal_user) {
             $included['account_balance_usd'] = $user->account_balance_usd;
         } else {
             $hidden[] = 'account_balance';
+        }
+
+        if ($is_normal_user || $user->type === UserType::DIRECTOR) {
+            $hidden[] = 'shop_id';
         }
 
         $attributes = collect($user)
