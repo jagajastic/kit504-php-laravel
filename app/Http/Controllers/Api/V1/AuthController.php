@@ -7,9 +7,8 @@ use App\Enums\UserType;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\JsonApi\V1\Auth\LoginRequest;
-use LaravelJsonApi\Core\Document\Error;
-use App\JsonApi\V1\Auth\RegisterRequest;
+use App\Http\Requests\V1\Auth\LoginRequest;
+use App\Http\Requests\V1\Auth\RegisterRequest;
 use function collect;
 
 class AuthController extends Controller
@@ -25,17 +24,16 @@ class AuthController extends Controller
     /**
      * Login a user.
      */
-    public function login(LoginRequest $request): JsonResponse|Error
+    public function login(LoginRequest $request): JsonResponse
     {
-        $email    = $request->input('data.attributes.email');
-        $password = $request->input('data.attributes.password');
-        $user     = User::getUserBy($email, $password);
+        $user     = User::getUserBy($request->email, $request->password);
 
         if ($user === \null) {
-            return Error::fromArray([
-                'status' => 401,
-                'detail' => 'Email or password does not match.',
-            ]);
+            return $this->error(
+                \null,
+                'Email or password does not match.',
+                JsonResponse::HTTP_UNAUTHORIZED,
+            );
         }
 
         return $this->authResponse($user);
@@ -46,7 +44,7 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request): JsonResponse
     {
-        $user = User::create($request->input('data.attributes'));
+        $user = User::create($request->validated());
 
         $user->refresh();
 
@@ -60,11 +58,9 @@ class AuthController extends Controller
     {
         $uuid = Str::orderedUuid()->toString();
 
-        $user->apiTokens()->create([
-            'value' => $uuid,
-        ]);
+        $user->apiTokens()->create(['value' => $uuid]);
 
-        $hidden = ['id'];
+        $hidden = [];
 
         $included = [
             'api_token' => $uuid,
@@ -82,22 +78,11 @@ class AuthController extends Controller
             $hidden[] = 'shop_id';
         }
 
-        $attributes = collect($user)
+        $data = collect($user)
             ->except($hidden)
             ->merge($included)
             ->toArray();
 
-        $data = [
-            'jsonapi' => [
-                'version' => '1.0',
-            ],
-            'data' => [
-                'type'       => 'auth',
-                'id'         => $user->id,
-                'attributes' => $attributes,
-            ],
-        ];
-
-        return new JsonResponse($data, JsonResponse::HTTP_CREATED);
+        return $this->ok($data, JsonResponse::HTTP_CREATED);
     }
 }

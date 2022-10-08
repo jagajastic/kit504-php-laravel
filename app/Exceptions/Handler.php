@@ -2,8 +2,6 @@
 
 namespace App\Exceptions;
 
-use LaravelJsonApi\Exceptions\ExceptionParser;
-use LaravelJsonApi\Core\Exceptions\JsonApiException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -42,12 +40,5 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (JsonApiException $ex) {
-            return $ex->is5xx();
-        });
-
-        $this->renderable(
-            ExceptionParser::make()->renderable()
-        );
     }
 }
