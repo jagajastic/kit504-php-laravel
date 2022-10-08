@@ -71,6 +71,7 @@ class AuthController extends Controller
         ];
 
         if (\in_array($user->type, UserType::normalUsers())) {
+            $hidden[]                        = 'shop_id';
             $included['account_balance_usd'] = $user->account_balance_usd;
         } else {
             $hidden[] = 'account_balance';
