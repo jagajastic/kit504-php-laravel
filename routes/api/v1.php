@@ -15,7 +15,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
 
-Route::prefix('v1/auth')->name('api.v1.auth.')->group(function (Router $router) {
+Route::prefix('auth')->name('auth.')->group(function (Router $router) {
     $router->post('login', [AuthController::class, 'login'])->name('login');
     $router->post('register', [AuthController::class, 'register'])->name('register');
 });
