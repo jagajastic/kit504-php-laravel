@@ -2,7 +2,13 @@
 
 namespace App\Exceptions;
 
+use Throwable;
+use Illuminate\Support\Arr;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -11,9 +17,7 @@ class Handler extends ExceptionHandler
      *
      * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
      */
-    protected $levels = [
-        //
-    ];
+    protected $levels = [];
 
     /**
      * A list of the exception types that are not reported.
@@ -40,5 +44,52 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
+        $this->renderable(function (Throwable $e, Request $request) {
+            if (!$request->is('api/*')) {
+                return;
+            }
+
+            if ($e instanceof NotFoundHttpException) {
+                return response()->json(
+                    [
+                        'ok'      => \false,
+                        'message' => 'Record not found.',
+                    ],
+                    JsonResponse::HTTP_NOT_FOUND
+                );
+            }
+
+            if ($e instanceof ValidationException) {
+                $errors = [];
+                $errorBag = $e->validator->errors();
+                $keys = $errorBag->keys();
+
+                foreach ($keys as $key) {
+                    Arr::set(
+                        $errors,
+                        $key,
+                        $errorBag->first($key)
+                    );
+                }
+
+                return response()->json(
+                    [
+                        'ok'      => \false,
+                        'message' => 'Validation error.',
+                        'errors'  => $errors,
+                    ],
+                    JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
+                );
+            }
+
+            return response()->json(
+                [
+                    'ok'      => \false,
+                    'message' => 'Server error.',
+                ],
+                $this->isHttpException($e) ? $e->getStatusCode() : JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
+                $this->isHttpException($e) ? $e->getHeaders() : [],
+            );
+        });
     }
 }
