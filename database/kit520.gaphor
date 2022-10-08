@@ -68,6 +68,7 @@ association {
 <ownedAttribute>
 <reflist>
 <ref refid="7792b5fd-40be-11ed-a48b-39ab5448b79b"/>
+<ref refid="07866834-4746-11ed-aa18-a5c4464061e1"/>
 <ref refid="7cc1ce3c-40be-11ed-b417-39ab5448b79b"/>
 <ref refid="8c0f21e9-40be-11ed-959c-39ab5448b79b"/>
 <ref refid="7dc84b60-40c0-11ed-821e-939c9d1cc761"/>
@@ -98,7 +99,7 @@ association {
 <val>331.6855861666618</val>
 </width>
 <height>
-<val>202.0</val>
+<val>219.0</val>
 </height>
 <diagram>
 <ref refid="4e901399-40be-11ed-8fe3-39ab5448b79b"/>
@@ -230,7 +231,6 @@ association {
 <ownedAttribute>
 <reflist>
 <ref refid="ec8b056b-40f1-11ed-9d37-a97c3b013334"/>
-<ref refid="fc25239f-40f1-11ed-b365-a97c3b013334"/>
 <ref refid="0437e87c-40f2-11ed-91ed-a97c3b013334"/>
 <ref refid="343cc3f4-425c-11ed-a7b8-e5cd7456de47"/>
 <ref refid="3abae92a-425c-11ed-bba1-e5cd7456de47"/>
@@ -276,14 +276,6 @@ association {
 </class_>
 <name>
 <val>+ id: uuid*</val>
-</name>
-</Property>
-<Property id="fc25239f-40f1-11ed-b365-a97c3b013334">
-<class_>
-<ref refid="e5288954-40f1-11ed-af14-a97c3b013334"/>
-</class_>
-<name>
-<val>+ manager_id: uuid?</val>
 </name>
 </Property>
 <Property id="0437e87c-40f2-11ed-91ed-a97c3b013334">
@@ -426,7 +418,7 @@ association {
 <val>(1.0, 0.0, 0.0, 1.0, -2395.660655551413, -433.1553429955537)</val>
 </matrix>
 <points>
-<val>[(210.09691259040528, 65.38292742831106), (-11.251147914002559, 65.38292742831106)]</val>
+<val>[(210.09691259040528, 65.25507208445914), (-11.251147914002559, 66.32884876999503)]</val>
 </points>
 <head-connection>
 <ref refid="e529305b-40f1-11ed-8f91-a97c3b013334"/>
@@ -687,5 +679,13 @@ association {
 <typeValue>
 <val>string</val>
 </typeValue>
+</Property>
+<Property id="07866834-4746-11ed-aa18-a5c4464061e1">
+<class_>
+<ref refid="6f447146-40be-11ed-a55a-39ab5448b79b"/>
+</class_>
+<name>
+<val>shop_id: uuid?</val>
+</name>
 </Property>
 </gaphor>
