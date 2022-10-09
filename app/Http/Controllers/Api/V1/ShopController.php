@@ -31,7 +31,11 @@ class ShopController extends Controller
      */
     public function show(Shop $shop): JsonResponse
     {
-        return $this->ok(new ShopResource($shop));
+        return $this->ok(new ShopResource(
+            $shop->load([
+                'products',
+            ])
+        ));
     }
 
     /**
