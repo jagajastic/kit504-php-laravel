@@ -25,5 +25,6 @@ Route::prefix('auth')->name('auth.')->group(function (Router $router) {
 // Shop Routes.
 Route::prefix('shops')->name('shops.')->group(function (Router $router) {
     $router->get('/', [ShopController::class, 'index'])->name('shops.index');
+    $router->post('/', [ShopController::class, 'store'])->name('shops.store');
     $router->get('/{shop}', [ShopController::class, 'show'])->name('shops.show');
 });

@@ -4,14 +4,20 @@ namespace App\Exceptions;
 
 use Throwable;
 use Illuminate\Support\Arr;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Traits\SendsResponseTrait;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
+    use SendsResponseTrait;
+
     /**
      * A list of exception types with their corresponding custom log levels.
      *
@@ -49,13 +55,36 @@ class Handler extends ExceptionHandler
                 return;
             }
 
+            if ($e instanceof MethodNotAllowedHttpException) {
+                return $this->error(
+                    \null,
+                    $this->getStatusText(
+                        JsonResponse::HTTP_METHOD_NOT_ALLOWED,
+                        $e
+                    ),
+                    JsonResponse::HTTP_METHOD_NOT_ALLOWED,
+                );
+            }
+
+            if ($e instanceof AuthenticationException) {
+                return $this->error(
+                    \null,
+                    $this->getStatusText(
+                        JsonResponse::HTTP_UNAUTHORIZED,
+                        $e
+                    ),
+                    JsonResponse::HTTP_UNAUTHORIZED,
+                );
+            }
+
             if ($e instanceof NotFoundHttpException) {
-                return response()->json(
-                    [
-                        'ok'      => \false,
-                        'message' => 'Record not found.',
-                    ],
-                    JsonResponse::HTTP_NOT_FOUND
+                return $this->error(
+                    \null,
+                    $this->getStatusText(
+                        JsonResponse::HTTP_NOT_FOUND,
+                        $e
+                    ),
+                    JsonResponse::HTTP_NOT_FOUND,
                 );
             }
 
@@ -72,24 +101,44 @@ class Handler extends ExceptionHandler
                     );
                 }
 
-                return response()->json(
-                    [
-                        'ok'      => \false,
-                        'message' => 'Validation error.',
-                        'errors'  => $errors,
-                    ],
+                return $this->error(
+                    $errors,
+                    $this->getStatusText(
+                        JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
+                        $e
+                    ),
                     JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
                 );
             }
 
-            return response()->json(
-                [
-                    'ok'      => \false,
-                    'message' => 'Server error.',
-                ],
-                $this->isHttpException($e) ? $e->getStatusCode() : JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
-                $this->isHttpException($e) ? $e->getHeaders() : [],
-            );
+            if ($e instanceof HttpException) {
+                return $this->error(
+                    \null,
+                    $this->getStatusText($e->getStatusCode(), $e),
+                    $e->getStatusCode(),
+                );
+            }
         });
+    }
+
+    /**
+     * Get status message for HTTP code.
+     */
+    public function getStatusText(int $code, Throwable $e): string
+    {
+        switch ($code) {
+            case JsonResponse::HTTP_METHOD_NOT_ALLOWED:
+                return 'HTTP method is invalid.';
+            case JsonResponse::HTTP_NOT_FOUND:
+                return 'Record not found.';
+            case JsonResponse::HTTP_FORBIDDEN:
+                return 'Permission denied.';
+            case JsonResponse::HTTP_UNAUTHORIZED:
+                return 'Unauthenticated';
+            case JsonResponse::HTTP_UNPROCESSABLE_ENTITY:
+                return 'Validation errors.';
+            default:
+                return empty($e->getMessage()) ? 'Server error.' : $e->getMessage();
+        }
     }
 }
