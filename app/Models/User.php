@@ -24,10 +24,8 @@ class User extends Model
 
     /**
      * Returns the user's account balance in USD.
-     *
-     * @return float
      */
-    public function getAccountBalanceUsdAttribute()
+    public function getAccountBalanceUsdAttribute(): float
     {
         return $this->account_balance / 100;
     }
