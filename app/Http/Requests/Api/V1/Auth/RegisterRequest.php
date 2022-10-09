@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\V1\Auth;
+namespace App\Http\Requests\Api\V1\Auth;
 
 use App\Enums\UserType;
 use Illuminate\Validation\Rule;

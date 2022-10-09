@@ -7,8 +7,8 @@ use App\Enums\UserType;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\Auth\LoginRequest;
-use App\Http\Requests\V1\Auth\RegisterRequest;
+use App\Http\Requests\Api\V1\Auth\LoginRequest;
+use App\Http\Requests\Api\V1\Auth\RegisterRequest;
 use function collect;
 
 class AuthController extends Controller
@@ -26,7 +26,7 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request): JsonResponse
     {
-        $user     = User::getUserBy($request->email, $request->password);
+        $user = User::getUserBy($request->email, $request->password);
 
         if ($user === \null) {
             return $this->error(
