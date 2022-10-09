@@ -7,11 +7,20 @@ use App\Traits\ModelEssentialsTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Shop extends Model
 {
     use HasFactory;
     use ModelEssentialsTrait;
+
+    /**
+     * Return products that this shop has.
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
+    }
 
     /**
      * Return staffs working in a shop.
