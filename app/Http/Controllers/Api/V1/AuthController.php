@@ -34,7 +34,7 @@ class AuthController extends Controller
             );
         }
 
-        return $this->ok(new AuthResource($user));
+        return $this->ok(new AuthResource($user), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -46,6 +46,6 @@ class AuthController extends Controller
 
         $user->refresh();
 
-        return $this->ok(new AuthResource($user));
+        return $this->ok(new AuthResource($user), JsonResponse::HTTP_CREATED);
     }
 }

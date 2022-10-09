@@ -16,33 +16,30 @@ class AuthResource extends JsonResource
      */
     public function toArray($request)
     {
-        $user = $this->resource;
-
         $uuid = Str::orderedUuid()->toString();
 
-        $user->apiTokens()->create(['value' => $uuid]);
+        $this->apiTokens()->create(['value' => $uuid]);
 
-        $hidden = [];
+        $is_normal_user = \in_array($this->type, UserType::normalUsers(), \true);
 
-        $included = [
-            'api_token' => $uuid,
+        return  [
+            'id'              => $this->id,
+            'shop_id'         => $this->when(
+                !$is_normal_user && $this->type !== UserType::DIRECTOR,
+                function () {
+                    return $this->shop_id;
+                }
+            ),
+            'api_token'       => $uuid,
+            'first_name'      => $this->first_name,
+            'last_name'       => $this->last_name,
+            'type'            => $this->type,
+            'account_balance' => $this->when($is_normal_user, function () {
+                return $this->account_balance;
+            }),
+            'account_balance_usd' => $this->when($is_normal_user, function () {
+                return $this->account_balance_usd;
+            }),
         ];
-
-        $is_normal_user = \in_array($user->type, UserType::normalUsers());
-
-        if ($is_normal_user) {
-            $included['account_balance_usd'] = $user->account_balance_usd;
-        } else {
-            $hidden[] = 'account_balance';
-        }
-
-        if ($is_normal_user || $user->type === UserType::DIRECTOR) {
-            $hidden[] = 'shop_id';
-        }
-
-        return collect($user)
-            ->except($hidden)
-            ->merge($included)
-            ->toArray();
     }
 }

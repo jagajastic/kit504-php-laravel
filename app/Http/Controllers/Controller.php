@@ -30,7 +30,10 @@ class Controller extends BaseController
         }
 
         if ($data instanceof JsonResource) {
-            return $data->additional($body)->response();
+            return $data->additional($body)
+                ->response()
+                ->setStatusCode($status)
+                ->withHeaders($headers);
         }
 
         if ($data !== \null) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Shop;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\V1\ShopResource;
 
 class ShopController extends Controller
 {
@@ -13,7 +14,7 @@ class ShopController extends Controller
      */
     public function index(): JsonResponse
     {
-        return $this->ok(Shop::all());
+        return $this->ok(ShopResource::collection(Shop::all()));
     }
 
     /**
@@ -21,6 +22,6 @@ class ShopController extends Controller
      */
     public function show(Shop $shop): JsonResponse
     {
-        return $this->ok($shop);
+        return $this->ok(new ShopResource($shop));
     }
 }
