@@ -702,6 +702,8 @@ association {
 <reflist>
 <ref refid="540430d6-4800-11ed-8b87-51d53c706755"/>
 <ref refid="57394dea-4800-11ed-8b87-51d53c706755"/>
+<ref refid="94d0ca9c-4801-11ed-8b87-51d53c706755"/>
+<ref refid="99172420-4801-11ed-8b87-51d53c706755"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -721,10 +723,10 @@ association {
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>152.0</val>
+<val>200.0</val>
 </width>
 <height>
-<val>83.0</val>
+<val>117.0</val>
 </height>
 <diagram>
 <ref refid="4e901399-40be-11ed-8fe3-39ab5448b79b"/>
@@ -778,7 +780,7 @@ association {
 <val>(1.0, 0.0, 0.0, 1.0, -2065.641910635428, -596.5055194932701)</val>
 </matrix>
 <points>
-<val>[(139.5088733834391, -8.318344116210483), (-63.0779602552675, -6.614619585521268)]</val>
+<val>[(139.5088733834391, 10.517877701838643), (-63.0779602552675, -6.614619585521268)]</val>
 </points>
 <head-connection>
 <ref refid="3c09222b-4800-11ed-8b87-51d53c706755"/>
@@ -857,7 +859,7 @@ association {
 <val>(1.0, 0.0, 0.0, 1.0, -1909.2533608307403, -573.050654991317)</val>
 </matrix>
 <points>
-<val>[(0.0, 5.244249884834176), (-86.47018440435582, 114.55850744424924)]</val>
+<val>[(5.330424133025872, 39.244249884834176), (-86.47018440435582, 114.55850744424924)]</val>
 </points>
 <head-connection>
 <ref refid="3c09222b-4800-11ed-8b87-51d53c706755"/>
@@ -915,5 +917,21 @@ association {
 <type>
 <ref refid="e5288954-40f1-11ed-af14-a97c3b013334"/>
 </type>
+</Property>
+<Property id="94d0ca9c-4801-11ed-8b87-51d53c706755">
+<class_>
+<ref refid="3c09222a-4800-11ed-8b87-51d53c706755"/>
+</class_>
+<name>
+<val>created_at: timestamp?</val>
+</name>
+</Property>
+<Property id="99172420-4801-11ed-8b87-51d53c706755">
+<class_>
+<ref refid="3c09222a-4800-11ed-8b87-51d53c706755"/>
+</class_>
+<name>
+<val>updated_at: timestamp?</val>
+</name>
 </Property>
 </gaphor>

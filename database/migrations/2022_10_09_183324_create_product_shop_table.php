@@ -15,6 +15,7 @@ return new class() extends Migration {
         Schema::create('product_shop', function (Blueprint $table) {
             $table->uuid('product_id');
             $table->uuid('shop_id');
+            $table->timestamps();
             $table->index(['product_id', 'shop_id']);
         });
     }

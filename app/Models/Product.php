@@ -15,6 +15,6 @@ class Product extends Model
      */
     public function shops(): BelongsToMany
     {
-        return $this->belongsToMany(Shop::class);
+        return $this->belongsToMany(Shop::class)->withTimestamps();
     }
 }
