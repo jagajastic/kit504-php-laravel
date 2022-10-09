@@ -13,5 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        if (\config('app.env') !== 'production') {
+            $this->call(UserSeeder::class);
+            $this->call(ShopSeeder::class);
+        }
     }
 }

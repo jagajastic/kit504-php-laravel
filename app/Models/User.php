@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\AuthModelTrait;
 use App\Traits\ModelEssentialsTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Model
@@ -28,5 +29,13 @@ class User extends Model
     public function getAccountBalanceUsdAttribute(): float
     {
         return $this->account_balance / 100;
+    }
+
+    /**
+     * Return shop that a user is working in.
+     */
+    public function shop(): BelongsTo
+    {
+        return $this->belongsTo(Shop::class);
     }
 }

@@ -27,7 +27,7 @@ class Shop extends Model
      */
     public function staffs(): HasMany
     {
-        return $this->hasMany(User::class, 'shop_id', 'id');
+        return $this->hasMany(User::class);
     }
 
     /**
