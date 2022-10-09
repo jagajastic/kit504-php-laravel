@@ -311,6 +311,7 @@ association {
 <reflist>
 <ref refid="adf81182-40f2-11ed-9326-a97c3b013334"/>
 <ref refid="82521697-4419-11ed-892c-b53e65e218b0"/>
+<ref refid="2cf0e776-4807-11ed-8b87-51d53c706755"/>
 <ref refid="d730c01d-4417-11ed-96a8-b53e65e218b0"/>
 <ref refid="efcfef69-40f2-11ed-b0d3-a97c3b013334"/>
 <ref refid="f4cf66c0-40f2-11ed-ba74-a97c3b013334"/>
@@ -336,7 +337,7 @@ association {
 <val>207.8132334630618</val>
 </width>
 <height>
-<val>134.0</val>
+<val>151.0</val>
 </height>
 <diagram>
 <ref refid="4e901399-40be-11ed-8fe3-39ab5448b79b"/>
@@ -780,7 +781,7 @@ association {
 <val>(1.0, 0.0, 0.0, 1.0, -2065.641910635428, -596.5055194932701)</val>
 </matrix>
 <points>
-<val>[(143.0649036568766, -9.987188216130107), (-63.0779602552675, -6.614619585521268)]</val>
+<val>[(143.0649036568766, -9.987188216130107), (-63.0779602552675, -1.6201817310796969)]</val>
 </points>
 <head-connection>
 <ref refid="3c09222b-4800-11ed-8b87-51d53c706755"/>
@@ -932,6 +933,14 @@ association {
 </class_>
 <name>
 <val>updated_at: timestamp?</val>
+</name>
+</Property>
+<Property id="2cf0e776-4807-11ed-8b87-51d53c706755">
+<class_>
+<ref refid="a86d0267-40f2-11ed-be3f-a97c3b013334"/>
+</class_>
+<name>
+<val>image: string?</val>
 </name>
 </Property>
 </gaphor>
