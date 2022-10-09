@@ -43,9 +43,7 @@ class ShopController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        $shop = Shop::create($request->validated());
-
-        $shop->refresh();
+        $shop = Shop::create($request->validated())->refresh();
 
         return $this->ok(
             new ShopResource($shop),

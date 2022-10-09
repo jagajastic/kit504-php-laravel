@@ -42,9 +42,7 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request): JsonResponse
     {
-        $user = User::create($request->validated());
-
-        $user->refresh();
+        $user = User::create($request->validated())->refresh();
 
         return $this->ok(new AuthResource($user), JsonResponse::HTTP_CREATED);
     }
