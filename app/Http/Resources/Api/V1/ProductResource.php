@@ -15,10 +15,12 @@ class ProductResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'        => $this->id,
-            'name'      => $this->name,
-            'price'     => $this->price,
-            'price_usd' => $this->price_usd,
+            'id'           => $this->id,
+            'name'         => $this->name,
+            'price'        => $this->price,
+            'price_usd'    => $this->price_usd,
+            'created_at'   => $this->created_at,
+            'updated_at'   => $this->updated_at,
         ];
     }
 }
