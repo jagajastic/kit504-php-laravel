@@ -19,7 +19,6 @@ class ShopResource extends JsonResource
             'name'         => $this->name,
             'opening_time' => $this->opening_time,
             'closing_time' => $this->closing_time,
-            'products'     => ProductResource::collection($this->whenLoaded('products')),
             'created_at'   => $this->created_at,
             'updated_at'   => $this->updated_at,
         ];
