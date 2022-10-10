@@ -115,7 +115,7 @@ class ShopController extends Controller
 
         return $this->ok(
             \null,
-            JsonResponse::HTTP_CREATED,
+            JsonResponse::HTTP_ACCEPTED,
             'Products has been synced to shop.'
         );
     }
