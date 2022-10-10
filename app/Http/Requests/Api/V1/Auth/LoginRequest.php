@@ -2,20 +2,10 @@
 
 namespace App\Http\Requests\Api\V1\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class LoginRequest extends FormRequest
+class LoginRequest extends BaseFormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return \true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
