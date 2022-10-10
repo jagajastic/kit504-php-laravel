@@ -19,7 +19,7 @@ class RegisterRequest extends BaseFormRequest
             'first_name'    => ['required', 'string', 'min:2'],
             'last_name'     => ['required', 'string', 'min:2'],
             'email'         => ['required', 'email', 'unique:users,email'],
-            'password'      => ['required', 'min:8'],
+            'password'      => ['required', $this->getPasswordRule(['confirmed'])],
             'type'          => [
                 'required',
                 Rule::in([UserType::UTAS_EMPLOYEE, UserType::UTAS_STUDENT]),

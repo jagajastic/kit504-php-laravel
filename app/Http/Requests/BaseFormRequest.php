@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Http\File;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BaseFormRequest extends FormRequest
@@ -41,6 +42,23 @@ class BaseFormRequest extends FormRequest
     public function rules()
     {
         return [];
+    }
+
+    /**
+     * Get password rule.
+     */
+    protected function getPasswordRule(
+        array $extraRules = [],
+        int $min = 6,
+        int $max = 12,
+    ): Password {
+        $max  = 'max:' . $max;
+
+        return Password::min($min)
+            ->mixedCase()
+            ->numbers()
+            ->symbols()
+            ->rules([$max, ...$extraRules]);
     }
 
     /**

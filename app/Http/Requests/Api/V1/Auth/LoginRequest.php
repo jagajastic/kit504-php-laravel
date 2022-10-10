@@ -15,7 +15,7 @@ class LoginRequest extends BaseFormRequest
     {
         return [
             'email'    => ['required', 'email'],
-            'password' => ['required', 'min:8'],
+            'password' => ['required', $this->getPasswordRule()],
         ];
     }
 }
