@@ -25,15 +25,6 @@ class AuthResource extends JsonResource
         return  [
             'id'              => $this->id,
             'api_token'       => $uuid,
-            'shop'            => $this->when(
-                $this->shop_id !== \null && \in_array(
-                    $this->type,
-                    [UserType::SHOP_MANAGER, UserType::SHOP_STAFF]
-                ),
-                function () {
-                    return new ShopResource($this->shop);
-                }
-            ),
             'first_name'      => $this->first_name,
             'last_name'       => $this->last_name,
             'type'            => $this->type,
@@ -43,6 +34,15 @@ class AuthResource extends JsonResource
             'account_balance_usd' => $this->when($is_normal_user, function () {
                 return $this->account_balance_usd;
             }),
+            'shop'            => $this->when(
+                $this->shop_id !== \null && \in_array(
+                    $this->type,
+                    [UserType::SHOP_MANAGER, UserType::SHOP_STAFF]
+                ),
+                function () {
+                    return new ShopResource($this->shop);
+                }
+            ),
         ];
     }
 }
