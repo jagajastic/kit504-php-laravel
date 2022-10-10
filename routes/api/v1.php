@@ -32,6 +32,8 @@ Route::prefix('shops')->name('shops.')->group(function (Router $router) {
         ->name('shops.store')
         ->middleware(UserTypeMiddleware::make([UserType::DIRECTOR]));
     $router->get('/{shop}', [ShopController::class, 'show'])->name('shops.show');
+    $router->patch('/{shop}', [ShopController::class, 'update'])->name('shops.update');
+    $router->delete('/{shop}', [ShopController::class, 'destroy'])->name('shops.destroy');
 });
 
 // Product Routes.
@@ -45,4 +47,6 @@ Route::prefix('products')
         $router->get('/', [ProductController::class, 'index'])->name('products.index');
         $router->post('/', [ProductController::class, 'store'])->name('products.store');
         $router->get('/{product}', [ProductController::class, 'show'])->name('products.show');
+        $router->patch('/{product}', [ProductController::class, 'update'])->name('products.update');
+        $router->delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
     });

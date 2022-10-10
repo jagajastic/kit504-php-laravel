@@ -86,4 +86,27 @@ trait ModelEssentialsTrait
     {
         return 'string';
     }
+
+    /**
+     * Scope a query to add pagination.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  int|null  $perPage
+     * @param string $pageParam
+     * @param array $columns
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePaginated(
+        $query,
+        $perPage = \null,
+        $pageParam = 'page',
+        $columns = ['*']
+    ) {
+        if ($perPage === \null) {
+            $perPage = \intval(\request('per_page'));
+            $perPage = $perPage === 0 ? 10 : $perPage;
+        }
+
+        return $query->simplePaginate($perPage, $columns, $pageParam);
+    }
 }

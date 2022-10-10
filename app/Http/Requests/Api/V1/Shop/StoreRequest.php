@@ -14,9 +14,9 @@ class StoreRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'name'         => ['required', 'string', 'min:1'],
-            'opening_time' => ['required', 'string', 'date_format:H:i'],
-            'closing_time' => ['required', 'string', 'date_format:H:i'],
+            'name'         => [$this->requiredRule(), 'string', 'min:1'],
+            'opening_time' => [$this->requiredRule(), 'string', 'date_format:H:i'],
+            'closing_time' => [$this->requiredRule(), 'string', 'date_format:H:i'],
         ];
     }
 }

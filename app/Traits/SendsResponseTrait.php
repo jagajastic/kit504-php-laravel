@@ -32,10 +32,6 @@ trait SendsResponseTrait
             $body['data'] = $data;
         }
 
-        if ($status === JsonResponse::HTTP_NO_CONTENT) {
-            $body = '';
-        }
-
         return new JsonResponse($body, $status, $headers);
     }
 
