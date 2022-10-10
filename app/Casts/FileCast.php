@@ -58,7 +58,7 @@ class FileCast implements CastsAttributes
         // Check if `$value` is not null and it's an uploaded file...
         if ($value !== \null && !$value instanceof UploadedFile) {
             throw new \InvalidArgumentException(
-                'The given value is not an uploaded file.',
+                'The given value is not null or an uploaded file.',
             );
         }
 
