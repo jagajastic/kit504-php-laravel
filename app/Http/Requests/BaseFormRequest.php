@@ -79,9 +79,10 @@ class BaseFormRequest extends FormRequest
     {
         foreach ($this->rules() as $field => $ruleSet) {
             $ruleSet = \is_string($ruleSet) ? \explode('|', $ruleSet) : $ruleSet;
+            $isFile  = \in_array('file', $ruleSet) || \in_array('image', $ruleSet);
 
             if (
-                \in_array('file', $ruleSet) &&
+                $isFile &&
                 $this->has($field) &&
                 !$this->file($field) &&
                 ($value = $this->input($field)) &&
