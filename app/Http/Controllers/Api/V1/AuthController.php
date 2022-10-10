@@ -12,7 +12,7 @@ use App\Http\Requests\Api\V1\Auth\RegisterRequest;
 class AuthController extends Controller
 {
     /**
-     * Create [AuthController] instance.
+     * Create [AuthController] Instance.
      */
     public function __construct()
     {
@@ -20,7 +20,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Login a user.
+     * Login.
      */
     public function login(LoginRequest $request): JsonResponse
     {
@@ -38,7 +38,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Register a user.
+     * Register.
      */
     public function register(RegisterRequest $request): JsonResponse
     {
