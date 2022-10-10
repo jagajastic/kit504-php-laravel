@@ -2,21 +2,10 @@
 
 namespace App\Http\Requests\Api\V1\Shop;
 
-use App\Enums\UserType;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class StoreRequest extends FormRequest
+class StoreRequest extends BaseFormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return $this->user()->type === UserType::DIRECTOR;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
