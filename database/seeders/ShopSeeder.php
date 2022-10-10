@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -15,8 +16,11 @@ class ShopSeeder extends Seeder
      */
     public function run()
     {
-        // Create a shop.
-        $shop = Shop::factory(1)->create()->first();
+        // Create a shop with products.
+        $shop = Shop::factory(1)
+            ->has(Product::factory(5))
+            ->create()
+            ->first();
 
         // Create manager for shop.
         User::factory(1)

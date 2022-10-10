@@ -96,7 +96,7 @@ association {
 </Class>
 <ClassItem id="6f450e91-40be-11ed-b1c7-39ab5448b79b">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -2738.5973896320775, -447.8810330451146)</val>
+<val>(1.0, 0.0, 0.0, 1.0, -2738.5973896320775, -429.8010159552708)</val>
 </matrix>
 <top-left>
 <val>(0.0, -10.611114501953125)</val>
@@ -425,7 +425,7 @@ association {
 <val>(1.0, 0.0, 0.0, 1.0, -2395.660655551413, -433.1553429955537)</val>
 </matrix>
 <points>
-<val>[(210.09691259040528, 64.99990171943094), (-11.251147914002559, 53.031021567849564)]</val>
+<val>[(210.09691259040528, 64.87258619070681), (-11.251147914002559, 63.950080451407416)]</val>
 </points>
 <head-connection>
 <ref refid="e529305b-40f1-11ed-8f91-a97c3b013334"/>
@@ -718,7 +718,7 @@ association {
 </Class>
 <ClassItem id="3c09222b-4800-11ed-8b87-51d53c706755">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -1922.5770069785513, -671.3114710244515)</val>
+<val>(1.0, 0.0, 0.0, 1.0, -1914.9745899863638, -683.9880609902723)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -778,10 +778,10 @@ association {
 <ref refid="5d49d5e4-4800-11ed-8b87-51d53c706755"/>
 </tail_subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -2065.641910635428, -596.5055194932701)</val>
+<val>(1.0, 0.0, 0.0, 1.0, -2065.641910635428, -597.0334430772544)</val>
 </matrix>
 <points>
-<val>[(143.0649036568766, -9.987188216130107), (-63.0779602552675, -1.6201817310796969)]</val>
+<val>[(150.6673206490641, -22.1358545979665), (-63.0779602552675, -1.0922581470953219)]</val>
 </points>
 <head-connection>
 <ref refid="3c09222b-4800-11ed-8b87-51d53c706755"/>
@@ -816,6 +816,12 @@ association {
 <association>
 <ref refid="5d49d5e2-4800-11ed-8b87-51d53c706755"/>
 </association>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>product_id</val>
 </name>
@@ -825,11 +831,23 @@ association {
 <type>
 <ref refid="3c09222a-4800-11ed-8b87-51d53c706755"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="5d49d5e4-4800-11ed-8b87-51d53c706755">
 <association>
 <ref refid="5d49d5e2-4800-11ed-8b87-51d53c706755"/>
 </association>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>id</val>
 </name>
@@ -839,6 +857,12 @@ association {
 <type>
 <ref refid="a86d0267-40f2-11ed-be3f-a97c3b013334"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <AssociationItem id="67e98394-4800-11ed-8b87-51d53c706755">
 <diagram>
@@ -857,10 +881,10 @@ association {
 <ref refid="67e98397-4800-11ed-8b87-51d53c706755"/>
 </tail_subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -1909.2533608307403, -573.050654991317)</val>
+<val>(1.0, 0.0, 0.0, 1.0, -1909.8035317291778, -573.050654991317)</val>
 </matrix>
 <points>
-<val>[(8.886454406463372, 18.739183966865426), (-86.47018440435582, 114.55850744424924)]</val>
+<val>[(17.039042297088372, 6.062594001044658), (-85.9200135059184, 114.55850744424924)]</val>
 </points>
 <head-connection>
 <ref refid="3c09222b-4800-11ed-8b87-51d53c706755"/>
@@ -895,6 +919,12 @@ association {
 <association>
 <ref refid="67e98395-4800-11ed-8b87-51d53c706755"/>
 </association>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>shop_id</val>
 </name>
@@ -904,11 +934,23 @@ association {
 <type>
 <ref refid="3c09222a-4800-11ed-8b87-51d53c706755"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="67e98397-4800-11ed-8b87-51d53c706755">
 <association>
 <ref refid="67e98395-4800-11ed-8b87-51d53c706755"/>
 </association>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>id</val>
 </name>
@@ -918,6 +960,12 @@ association {
 <type>
 <ref refid="e5288954-40f1-11ed-af14-a97c3b013334"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="94d0ca9c-4801-11ed-8b87-51d53c706755">
 <class_>
