@@ -12,7 +12,7 @@ use App\Models\Product;
 class ProductController extends Controller
 {
     /**
-     * Get all products.
+     * Get Products.
      */
     public function index(): JsonResponse
     {
@@ -20,7 +20,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Get a product.
+     * Get Product.
      */
     public function show(Product $product): JsonResponse
     {
@@ -30,7 +30,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Create a product.
+     * Create Product.
      */
     public function store(StoreRequest $request): JsonResponse
     {
@@ -47,7 +47,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Update a product.
+     * Update Product.
      */
     public function update(UpdateRequest $request, Product $product): JsonResponse
     {
@@ -63,7 +63,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Delete a product.
+     * Delete Product.
      */
     public function destroy(Product $product): JsonResponse
     {
