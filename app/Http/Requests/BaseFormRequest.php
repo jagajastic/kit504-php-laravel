@@ -77,15 +77,16 @@ class BaseFormRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
+        // Add support for data URIs/base64 file uploads...
         foreach ($this->rules() as $field => $ruleSet) {
-            $ruleSet = \is_string($ruleSet) ? \explode('|', $ruleSet) : $ruleSet;
-            $isFile  = \in_array('file', $ruleSet) || \in_array('image', $ruleSet);
+            $value         = $this->input($field);
+            $ruleSet       = \is_array($ruleSet) ? $ruleSet : \explode('|', $ruleSet);
+            $hasFileRules  = \in_array('file', $ruleSet) || \in_array('image', $ruleSet);
 
             if (
-                $isFile &&
-                $this->has($field) &&
+                $hasFileRules &&
+                $value !== \null &&
                 !$this->file($field) &&
-                ($value = $this->input($field)) &&
                 \is_string($value)
             ) {
                 if (\strpos($value, ';base64') !== \false) {
@@ -111,22 +112,29 @@ class BaseFormRequest extends FormRequest
 
                 $file = new File($tmpFile);
 
-                if ($file->isFile()) {
-                    $uploadedFile = new UploadedFile(
-                        $file->getPathname(),
-                        $file->getBasename(),
-                        $file->getMimeType(),
-                        \UPLOAD_ERR_OK,
-                        \true
-                    );
-
-                    if ($uploadedFile->isValid()) {
-                        $this->offsetSet($field, $uploadedFile);
-
-                        $this->files->set($field, $uploadedFile);
-                    }
+                if (!$file->isFile()) {
+                    continue;
                 }
+
+                $uploadedFile = new UploadedFile(
+                    $file->getPathname(),
+                    $file->getBasename(),
+                    $file->getMimeType(),
+                    \UPLOAD_ERR_OK,
+                    \true
+                );
+
+                if (!$uploadedFile->isValid()) {
+                    continue;
+                }
+
+                $this->offsetSet($field, $uploadedFile);
+
+                $this->files->set($field, $uploadedFile);
             }
         }
+
+        // Continue the preparation..
+        parent::prepareForValidation();
     }
 }
