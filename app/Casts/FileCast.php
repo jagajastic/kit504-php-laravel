@@ -21,12 +21,21 @@ class FileCast implements CastsAttributes
     protected string $disk;
 
     /**
+     * The folder where predefined files are to protect them against deletion.
+     */
+    protected string $predefinedFilesFolder;
+
+    /**
      * Create a new cast class instance.
      */
-    public function __construct(string $folder, ?string $disk = 'public')
-    {
-        $this->disk   = $disk;
-        $this->folder = $folder;
+    public function __construct(
+        string $folder,
+        ?string $disk = 'public',
+        ?string $predefinedFilesFolder = 'predefined'
+    ) {
+        $this->disk                  = $disk;
+        $this->folder                = $folder;
+        $this->predefinedFilesFolder = $predefinedFilesFolder;
     }
 
     /**
@@ -85,7 +94,7 @@ class FileCast implements CastsAttributes
     public function deleteOldFileIfExists($attributes, $key)
     {
         if (\is_string($oldFile = Arr::get($attributes, $key))) {
-            if (!\preg_match('/^predefined/', $oldFile)) {
+            if (!\preg_match('/^' . $this->predefinedFilesFolder . '/', $oldFile)) {
                 $this->getStorage()->delete($oldFile);
             }
         }
