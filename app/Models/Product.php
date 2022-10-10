@@ -29,4 +29,12 @@ class Product extends Model
     {
         return $this->belongsToMany(Shop::class)->withTimestamps();
     }
+
+    /**
+     * Returns the product's price in USD.
+     */
+    public function getPriceUsdAttribute(): float
+    {
+        return $this->price / 100;
+    }
 }
