@@ -22,8 +22,7 @@ class AuthResource extends JsonResource
 
         $can_order = \in_array(
             $this->type,
-            [UserType::SHOP_STAFF, UserType::UTAS_EMPLOYEE, UserType::UTAS_STUDENT],
-            \true
+            [UserType::SHOP_STAFF, UserType::UTAS_EMPLOYEE, UserType::UTAS_STUDENT]
         );
 
         return  [
