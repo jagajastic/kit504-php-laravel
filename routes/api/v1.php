@@ -36,7 +36,7 @@ Route::prefix('shops')->name('shops.')->group(function (Router $router) {
     $router->delete('/{shop}', [ShopController::class, 'destroy'])->name('shops.destroy');
     $router->get('/{shop}/products', [ShopController::class, 'productsIndex'])->name('shops.products.index');
     $router->get('/{shop}/products/{product}', [ShopController::class, 'productsShow'])->name('shops.products.show');
-    $router->patch('/{shop}/products', [ShopController::class, 'productsUpdate'])->name('shops.products.update');
+    $router->put('/{shop}/products', [ShopController::class, 'productsUpdate'])->name('shops.products.update');
 });
 
 // Product Routes.
