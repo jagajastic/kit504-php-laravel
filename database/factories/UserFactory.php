@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\UserType;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +21,7 @@ class UserFactory extends Factory
             'first_name' => $this->faker->firstName,
             'last_name'  => $this->faker->lastName,
             'email'      => $this->faker->unique()->email,
-            'password'   => Hash::make('password'),
+            'password'   => 'password',
         ];
     }
 

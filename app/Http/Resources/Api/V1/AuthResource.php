@@ -24,13 +24,16 @@ class AuthResource extends JsonResource
 
         return  [
             'id'              => $this->id,
-            'shop_id'         => $this->when(
-                !$is_normal_user && $this->type !== UserType::DIRECTOR,
+            'api_token'       => $uuid,
+            'shop'            => $this->when(
+                $this->shop_id !== \null && \in_array(
+                    $this->type,
+                    [UserType::SHOP_MANAGER, UserType::SHOP_STAFF]
+                ),
                 function () {
-                    return $this->shop_id;
+                    return new ShopResource($this->shop);
                 }
             ),
-            'api_token'       => $uuid,
             'first_name'      => $this->first_name,
             'last_name'       => $this->last_name,
             'type'            => $this->type,
