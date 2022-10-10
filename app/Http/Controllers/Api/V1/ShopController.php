@@ -17,7 +17,7 @@ use App\Http\Requests\Api\V1\Shop\ProductUpdateRequest;
 class ShopController extends Controller
 {
     /**
-     * Create [ShopController] instance.
+     * Create [ShopController] Instance.
      */
     public function __construct()
     {
@@ -27,7 +27,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Get all shops.
+     * Get Shops.
      */
     public function index(): JsonResponse
     {
@@ -35,7 +35,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Get a shop.
+     * Get Shop.
      */
     public function show(Shop $shop): JsonResponse
     {
@@ -43,7 +43,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Create a shop.
+     * Create Shop.
      */
     public function store(StoreRequest $request): JsonResponse
     {
@@ -60,7 +60,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Update a shop.
+     * Update Shop.
      */
     public function update(UpdateRequest $request, Shop $shop): JsonResponse
     {
@@ -76,7 +76,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Delete a shop.
+     * Delete Shop.
      */
     public function destroy(Shop $shop): JsonResponse
     {
@@ -89,7 +89,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Get all shop products.
+     * Get Shop Products.
      */
     public function productsIndex(Shop $shop): JsonResponse
     {
@@ -97,7 +97,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Get a shop product.
+     * Get Shop Product.
      */
     public function productsShow(Shop $shop, string $product): JsonResponse
     {
@@ -107,7 +107,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Add products to shop.
+     * Manage Shop Products.
      */
     public function productsUpdate(Shop $shop, ProductUpdateRequest $request): JsonResponse
     {
