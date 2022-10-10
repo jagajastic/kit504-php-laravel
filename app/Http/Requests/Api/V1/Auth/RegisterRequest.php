@@ -22,7 +22,7 @@ class RegisterRequest extends BaseFormRequest
             'password'      => ['required', 'min:8'],
             'type'          => [
                 'required',
-                Rule::in(UserType::normalUsers()),
+                Rule::in([UserType::UTAS_EMPLOYEE, UserType::UTAS_STUDENT]),
             ],
         ];
     }

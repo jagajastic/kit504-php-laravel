@@ -20,7 +20,11 @@ class AuthResource extends JsonResource
 
         $this->apiTokens()->create(['value' => $uuid]);
 
-        $is_normal_user = \in_array($this->type, UserType::normalUsers(), \true);
+        $can_order = \in_array(
+            $this->type,
+            [UserType::SHOP_STAFF, UserType::UTAS_EMPLOYEE, UserType::UTAS_STUDENT],
+            \true
+        );
 
         return  [
             'id'              => $this->id,
@@ -28,10 +32,10 @@ class AuthResource extends JsonResource
             'first_name'      => $this->first_name,
             'last_name'       => $this->last_name,
             'type'            => $this->type,
-            'account_balance' => $this->when($is_normal_user, function () {
+            'account_balance' => $this->when($can_order, function () {
                 return $this->account_balance;
             }),
-            'account_balance_usd' => $this->when($is_normal_user, function () {
+            'account_balance_usd' => $this->when($can_order, function () {
                 return $this->account_balance_usd;
             }),
             'shop'            => $this->when(
