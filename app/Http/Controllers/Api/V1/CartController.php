@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Cart\StoreRequest;
+use App\Http\Requests\Api\V1\Cart\UpdateRequest;
+use App\Http\Resources\V1\CartItemResource;
 
 class CartController extends Controller
 {
@@ -15,7 +17,14 @@ class CartController extends Controller
      */
     public function show(Request $request, Shop $shop): JsonResponse
     {
-        return $this->ok($request->user()->getCart($shop->id));
+        $items = [];
+        $cart  = $request->user()->getCart($shop->id);
+
+        foreach ($cart as $key => $value) {
+            $items[] = new CartItemResource($value);
+        }
+
+        return $this->ok($items);
     }
 
     /**
@@ -36,6 +45,7 @@ class CartController extends Controller
         }
 
         $cart[$id] = [
+            'id'         => $id,
             'comment'    => $request->comment,
             'quantity'   => $request->quantity ?? 1,
         ];
@@ -43,8 +53,8 @@ class CartController extends Controller
         $request->user()->setCart($shop->id, $cart);
 
         return $this->ok(
-            \null,
-            JsonResponse::HTTP_ACCEPTED,
+            new CartItemResource($cart[$id]),
+            JsonResponse::HTTP_CREATED,
             'Item has been added to cart.',
         );
     }
@@ -52,8 +62,11 @@ class CartController extends Controller
     /**
      * Delete Cart Item.
      */
-    public function destroy(Request $request, Shop $shop, string $productId)
-    {
+    public function destroy(
+        Request $request,
+        Shop $shop,
+        string $productId
+    ): JsonResponse {
         $cart = $request->user()->getCart($shop->id);
 
         if (!isset($cart[$productId])) {
@@ -67,6 +80,55 @@ class CartController extends Controller
         unset($cart[$productId]);
 
         $request->user()->setCart($shop->id, $cart);
+
+        return $this->ok(
+            \null,
+            JsonResponse::HTTP_NO_CONTENT,
+        );
+    }
+
+    /**
+     * Update Cart Item.
+     */
+    public function update(
+        UpdateRequest $request,
+        Shop $shop,
+        string $productId
+    ): JsonResponse {
+        $cart = $request->user()->getCart($shop->id);
+
+        if (!isset($cart[$productId])) {
+            return $this->error(
+                \null,
+                'Item is not in cart.',
+                JsonResponse::HTTP_NOT_FOUND,
+            );
+        }
+
+        $updatedItemsCount = $request->safe()
+            ->collect()
+            ->each(function ($value, $key) use (&$cart, $productId) {
+                $cart[$productId][$key] = $value;
+            })
+            ->count();
+
+        if ($updatedItemsCount > 0) {
+            $request->user()->setCart($shop->id, $cart);
+        }
+
+        return $this->ok(
+            new CartItemResource($cart[$productId]),
+            JsonResponse::HTTP_ACCEPTED,
+            'Item has been updated.',
+        );
+    }
+
+    /**
+     * Clear Cart.
+     */
+    public function clear(Request $request, Shop $shop): JsonResponse
+    {
+        $request->user()->setCart($shop->id, []);
 
         return $this->ok(
             \null,

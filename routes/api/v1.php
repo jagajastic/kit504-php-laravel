@@ -40,6 +40,8 @@ Route::prefix('carts')
     ->group(function (Router $router) {
         $router->get('/{shop}', [CartController::class, 'show'])->name('show');
         $router->post('/{shop}', [CartController::class, 'store'])->name('store');
+        $router->delete('/{shop}', [CartController::class, 'clear'])->name('clear');
+        $router->patch('/{shop}/{productId}', [CartController::class, 'update'])->name('update');
         $router->delete('/{shop}/{productId}', [CartController::class, 'destroy'])->name('destroy');
     });
 
