@@ -37,4 +37,12 @@ class Shop extends Model
     {
         return $this->staffs()->whereType(UserType::SHOP_MANAGER)->first();
     }
+
+    /**
+     * Get shop orders relationship.
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }

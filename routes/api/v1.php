@@ -15,6 +15,7 @@ use App\Enums\UserType;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\ShopController;
 use App\Http\Middleware\UserTypeMiddleware;
@@ -25,18 +26,33 @@ Route::prefix('auth')->name('auth.')->group(function (Router $router) {
     $router->post('register', [AuthController::class, 'register'])->name('register');
 });
 
+// Cart Routes.
+Route::prefix('carts')
+    ->name('carts.')
+    ->middleware([
+        'auth:api',
+        UserTypeMiddleware::make([
+            UserType::SHOP_STAFF,
+            UserType::UTAS_EMPLOYEE,
+            UserType::UTAS_STUDENT,
+        ]),
+    ])
+    ->group(function (Router $router) {
+        $router->get('/{shop}', [CartController::class, 'index'])->name('show');
+    });
+
 // Shop Routes.
 Route::prefix('shops')->name('shops.')->group(function (Router $router) {
-    $router->get('/', [ShopController::class, 'index'])->name('shops.index');
+    $router->get('/', [ShopController::class, 'index'])->name('index');
     $router->post('/', [ShopController::class, 'store'])
-        ->name('shops.store')
+        ->name('store')
         ->middleware(UserTypeMiddleware::make([UserType::DIRECTOR]));
-    $router->get('/{shop}', [ShopController::class, 'show'])->name('shops.show');
-    $router->patch('/{shop}', [ShopController::class, 'update'])->name('shops.update');
-    $router->delete('/{shop}', [ShopController::class, 'destroy'])->name('shops.destroy');
-    $router->get('/{shop}/products', [ShopController::class, 'productsIndex'])->name('shops.products.index');
-    $router->get('/{shop}/products/{product}', [ShopController::class, 'productsShow'])->name('shops.products.show');
-    $router->put('/{shop}/products', [ShopController::class, 'productsUpdate'])->name('shops.products.update');
+    $router->get('/{shop}', [ShopController::class, 'show'])->name('show');
+    $router->patch('/{shop}', [ShopController::class, 'update'])->name('update');
+    $router->delete('/{shop}', [ShopController::class, 'destroy'])->name('destroy');
+    $router->get('/{shop}/products', [ShopController::class, 'productsIndex'])->name('products.index');
+    $router->get('/{shop}/products/{product}', [ShopController::class, 'productsShow'])->name('products.show');
+    $router->put('/{shop}/products', [ShopController::class, 'productsUpdate'])->name('products.update');
 });
 
 // Product Routes.
@@ -47,9 +63,9 @@ Route::prefix('products')
         UserTypeMiddleware::make([UserType::DIRECTOR]),
     ])
     ->group(function (Router $router) {
-        $router->get('/', [ProductController::class, 'index'])->name('products.index');
-        $router->post('/', [ProductController::class, 'store'])->name('products.store');
-        $router->get('/{product}', [ProductController::class, 'show'])->name('products.show');
-        $router->patch('/{product}', [ProductController::class, 'update'])->name('products.update');
-        $router->delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+        $router->get('/', [ProductController::class, 'index'])->name('index');
+        $router->post('/', [ProductController::class, 'store'])->name('store');
+        $router->get('/{product}', [ProductController::class, 'show'])->name('show');
+        $router->patch('/{product}', [ProductController::class, 'update'])->name('update');
+        $router->delete('/{product}', [ProductController::class, 'destroy'])->name('destroy');
     });
