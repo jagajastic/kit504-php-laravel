@@ -72,7 +72,7 @@ class OrderController extends Controller
                     'product_image' => $product->getRawOriginal('image'),
                 ];
 
-                $totalPrice += $product->price;
+                $totalPrice += $product->price * $cartItem['quantity'];
             }
         }
 
