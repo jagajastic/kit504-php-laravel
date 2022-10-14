@@ -16,6 +16,7 @@ return new class() extends Migration {
             $table->uuid('id')->primary();
             $table->uuid('user_id');
             $table->uuid('shop_id');
+            $table->bigInteger('total_price');
             $table->timestamps();
         });
     }

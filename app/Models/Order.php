@@ -52,20 +52,6 @@ class Order extends Model
     }
 
     /**
-     * Returns the order's total price.
-     */
-    public function getTotalPriceAttribute(): int
-    {
-        $total = 0;
-
-        foreach ($this->items as $item) {
-            $total += $item->product->price * $item->quantity;
-        }
-
-        return $total;
-    }
-
-    /**
      * Returns the order's total price in USD.
      */
     public function getTotalPriceUsdAttribute(): float

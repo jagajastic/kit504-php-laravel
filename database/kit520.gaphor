@@ -1004,6 +1004,7 @@ association {
 <ref refid="61a87eae-4b70-11ed-ad91-49cca4c22d70"/>
 <ref refid="78e4b092-4b70-11ed-ad91-49cca4c22d70"/>
 <ref refid="7ed5734c-4b70-11ed-ad91-49cca4c22d70"/>
+<ref refid="2712066e-4bae-11ed-ad91-49cca4c22d70"/>
 <ref refid="87521d4a-4b70-11ed-ad91-49cca4c22d70"/>
 <ref refid="8cc79732-4b70-11ed-ad91-49cca4c22d70"/>
 </reflist>
@@ -1095,6 +1096,9 @@ association {
 <ref refid="1a3a3aa2-4b71-11ed-ad91-49cca4c22d70"/>
 <ref refid="1f9c2064-4b71-11ed-ad91-49cca4c22d70"/>
 <ref refid="27ea2d9c-4b71-11ed-ad91-49cca4c22d70"/>
+<ref refid="300572a6-4bae-11ed-ad91-49cca4c22d70"/>
+<ref refid="b5c468f6-4baf-11ed-ad91-49cca4c22d70"/>
+<ref refid="bce445de-4baf-11ed-ad91-49cca4c22d70"/>
 <ref refid="2ed87f50-4b71-11ed-ad91-49cca4c22d70"/>
 <ref refid="31f1ed5c-4b71-11ed-ad91-49cca4c22d70"/>
 <ref refid="371b1510-4b71-11ed-ad91-49cca4c22d70"/>
@@ -1112,7 +1116,7 @@ association {
 </Class>
 <ClassItem id="0ea902d7-4b71-11ed-ad91-49cca4c22d70">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -2432.6264876222263, -175.14597769542206)</val>
+<val>(1.0, 0.0, 0.0, 1.0, -2464.533104353757, -175.14597769542206)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -1121,7 +1125,7 @@ association {
 <val>256.0</val>
 </width>
 <height>
-<val>185.0</val>
+<val>219.0</val>
 </height>
 <diagram>
 <ref refid="4e901399-40be-11ed-8fe3-39ab5448b79b"/>
@@ -1199,6 +1203,47 @@ association {
 </class_>
 <name>
 <val>updated_at: timestamp?</val>
+</name>
+</Property>
+<Property id="2712066e-4bae-11ed-ad91-49cca4c22d70">
+<class_>
+<ref refid="52b03dc4-4b70-11ed-ad91-49cca4c22d70"/>
+</class_>
+<name>
+<val>total_price</val>
+</name>
+<typeValue>
+<val>bigInteger</val>
+</typeValue>
+</Property>
+<Property id="300572a6-4bae-11ed-ad91-49cca4c22d70">
+<class_>
+<ref refid="0ea902d6-4b71-11ed-ad91-49cca4c22d70"/>
+</class_>
+<name>
+<val>product_price</val>
+</name>
+<typeValue>
+<val>bigInteger</val>
+</typeValue>
+</Property>
+<Property id="b5c468f6-4baf-11ed-ad91-49cca4c22d70">
+<class_>
+<ref refid="0ea902d6-4b71-11ed-ad91-49cca4c22d70"/>
+</class_>
+<name>
+<val>product_name</val>
+</name>
+<typeValue>
+<val>string</val>
+</typeValue>
+</Property>
+<Property id="bce445de-4baf-11ed-ad91-49cca4c22d70">
+<class_>
+<ref refid="0ea902d6-4b71-11ed-ad91-49cca4c22d70"/>
+</class_>
+<name>
+<val>product_image: string?</val>
 </name>
 </Property>
 </gaphor>

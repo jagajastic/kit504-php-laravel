@@ -27,4 +27,12 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    /**
+     * Returns the product's price in USD.
+     */
+    public function getProductPriceUsdAttribute(): float
+    {
+        return $this->product_price / 100;
+    }
 }

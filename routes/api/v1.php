@@ -90,6 +90,4 @@ Route::prefix('orders')
             ])
         );
         $router->get('/{order}', [OrderController::class, 'show'])->name('show');
-        $router->patch('/{order}', [OrderController::class, 'update'])->name('update');
-        $router->delete('/{order}', [OrderController::class, 'destroy'])->name('destroy');
     });

@@ -16,6 +16,9 @@ return new class() extends Migration {
             $table->uuid('id')->primary();
             $table->uuid('order_id');
             $table->uuid('product_id');
+            $table->bigInteger('product_price');
+            $table->string('product_name');
+            $table->string('product_image')->nullable();
             $table->unsignedInteger('quantity')->default(1);
             $table->string('comment')->nullable();
             $table->timestamps();

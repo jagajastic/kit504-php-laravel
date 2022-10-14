@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Order\StoreRequest;
 use App\Http\Resources\Api\V1\OrderResource;
+use App\Models\Product;
 use App\Models\Shop;
 
 class OrderController extends Controller
@@ -55,22 +56,37 @@ class OrderController extends Controller
             return $this->error(\null, 'Your cart for this shop is empty.');
         }
 
+        $totalPrice = 0;
+        $orderItems = [];
+
+        foreach ($cart as $cartItem) {
+            $product = Product::find($cartItem['id']);
+
+            if ($product !== \null) {
+                $orderItems[] = [
+                    'product_id'    => $product->id,
+                    'product_price' => $product->price,
+                    'product_name'  => $product->name,
+                    'comment'       => $cartItem['comment'],
+                    'quantity'      => $cartItem['quantity'],
+                    'product_image' => $product->getRawOriginal('image'),
+                ];
+
+                $totalPrice += $product->price;
+            }
+        }
+
+        $orderData = $request->safe()
+            ->collect()
+            ->put('total_price', $totalPrice)
+            ->toArray();
+
         $order = $request->user()
             ->orders()
-            ->create($request->validated())
+            ->create($orderData)
             ->refresh();
 
-        $order->items()->createMany(
-            \collect($cart)
-                ->map(function ($cartItem) {
-                    return [
-                        'product_id' => $cartItem['id'],
-                        'comment'    => $cartItem['comment'],
-                        'quantity'   => $cartItem['quantity'],
-                    ];
-                })
-                ->toArray()
-        );
+        $order->items()->createMany($orderItems);
 
         $request->user()->setCart($shop->id, []);
 
