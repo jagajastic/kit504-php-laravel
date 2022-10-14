@@ -26,6 +26,7 @@ Route::prefix('auth')->name('auth.')->group(function (Router $router) {
     $router->post('login', [AuthController::class, 'login'])->name('login');
     $router->post('register', [AuthController::class, 'register'])->name('register');
     $router->get('user', [AuthController::class, 'user'])->name('user');
+    $router->patch('user', [AuthController::class, 'updateUser'])->name('updateUser');
 });
 
 // Cart Routes.

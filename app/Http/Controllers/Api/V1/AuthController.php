@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\UserResource;
 use App\Http\Requests\Api\V1\Auth\LoginRequest;
 use App\Http\Requests\Api\V1\Auth\RegisterRequest;
+use App\Http\Requests\Api\V1\Auth\UpdateRequest;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -54,5 +55,39 @@ class AuthController extends Controller
     public function user(Request $request): JsonResponse
     {
         return $this->ok(new UserResource($request->user(), \false));
+    }
+
+    /**
+     * Update User.
+     */
+    public function updateUser(UpdateRequest $request): JsonResponse
+    {
+        $updates      = [];
+        $user         = $request->user();
+        $updatesCount = $request->safe()
+            ->collect()
+            ->each(function ($value, $key) use (&$updates, $user) {
+                switch ($key) {
+                    case 'account_balance':
+                        $updates[$key] = $user->account_balance + $value;
+                        break;
+                    default:
+                        $updates[$key] = $value;
+                        break;
+                }
+            })
+            ->count();
+
+        if ($updatesCount > 0) {
+            $user->update($updates);
+
+            $user->refresh();
+        }
+
+        return $this->ok(
+            new UserResource($user, \false),
+            JsonResponse::HTTP_ACCEPTED,
+            'Profile updated.'
+        );
     }
 }
