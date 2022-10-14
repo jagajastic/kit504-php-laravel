@@ -38,7 +38,8 @@ Route::prefix('carts')
         ]),
     ])
     ->group(function (Router $router) {
-        $router->get('/{shop}', [CartController::class, 'index'])->name('show');
+        $router->get('/{shop}', [CartController::class, 'show'])->name('show');
+        $router->post('/{shop}', [CartController::class, 'store'])->name('store');
     });
 
 // Shop Routes.
