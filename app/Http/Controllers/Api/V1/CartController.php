@@ -20,8 +20,8 @@ class CartController extends Controller
         $items = [];
         $cart  = $request->user()->getCart($shop->id);
 
-        foreach ($cart as $key => $value) {
-            $items[] = new CartItemResource($value);
+        foreach ($cart as $cartItem) {
+            $items[] = new CartItemResource($cartItem);
         }
 
         return $this->ok($items);
