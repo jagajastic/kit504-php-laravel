@@ -20,7 +20,7 @@ class OrderResource extends JsonResource
                 !$this->relationLoaded('user'),
                 $this->user_id,
             ),
-            'user'         => new AuthResource($this->whenLoaded('user'), \false),
+            'user'         => new UserResource($this->whenLoaded('user'), \false),
             'shop_id'      => $this->when(
                 !$this->relationLoaded('shop'),
                 $this->shop_id,

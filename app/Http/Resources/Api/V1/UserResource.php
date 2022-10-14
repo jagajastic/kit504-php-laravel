@@ -6,7 +6,7 @@ use App\Enums\UserType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AuthResource extends JsonResource
+class UserResource extends JsonResource
 {
     protected bool $generateToken;
 

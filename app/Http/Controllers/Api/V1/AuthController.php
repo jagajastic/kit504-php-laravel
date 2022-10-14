@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\V1\AuthResource;
+use App\Http\Resources\Api\V1\UserResource;
 use App\Http\Requests\Api\V1\Auth\LoginRequest;
 use App\Http\Requests\Api\V1\Auth\RegisterRequest;
 
@@ -34,7 +34,7 @@ class AuthController extends Controller
             );
         }
 
-        return $this->ok(new AuthResource($user), JsonResponse::HTTP_CREATED);
+        return $this->ok(new UserResource($user), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -44,6 +44,6 @@ class AuthController extends Controller
     {
         $user = User::create($request->validated())->refresh();
 
-        return $this->ok(new AuthResource($user), JsonResponse::HTTP_CREATED);
+        return $this->ok(new UserResource($user), JsonResponse::HTTP_CREATED);
     }
 }
