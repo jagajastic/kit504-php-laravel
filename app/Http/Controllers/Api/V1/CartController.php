@@ -48,4 +48,29 @@ class CartController extends Controller
             'Item has been added to cart.',
         );
     }
+
+    /**
+     * Delete Cart Item.
+     */
+    public function destroy(Request $request, Shop $shop, string $productId)
+    {
+        $cart = $request->user()->getCart($shop->id);
+
+        if (!isset($cart[$productId])) {
+            return $this->error(
+                \null,
+                'Item is not in cart.',
+                JsonResponse::HTTP_NOT_FOUND,
+            );
+        }
+
+        unset($cart[$productId]);
+
+        $request->user()->setCart($shop->id, $cart);
+
+        return $this->ok(
+            \null,
+            JsonResponse::HTTP_NO_CONTENT,
+        );
+    }
 }
