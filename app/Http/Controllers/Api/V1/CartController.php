@@ -23,18 +23,19 @@ class CartController extends Controller
      */
     public function store(StoreRequest $request, Shop $shop): JsonResponse
     {
+        $id      = $request->product_id;
         $cart    = $request->user()->getCart($shop->id);
-        $product = $shop->products()->whereId($request->product_id)->first();
+        $product = $shop->products()->whereId($id)->first();
 
         if ($product === \null) {
             return $this->error(\null, 'Product is not in shop.');
         }
 
-        if (isset($cart[$product->id])) {
+        if (isset($cart[$id])) {
             return $this->error(\null, 'Item is already in cart.');
         }
 
-        $cart[$product->id] = [
+        $cart[$id] = [
             'comment'    => $request->comment,
             'quantity'   => $request->quantity ?? 1,
         ];

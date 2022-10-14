@@ -14,7 +14,7 @@ class StoreRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'product_id' => ['required', 'uuid', 'exists:products,id'],
+            'product_id' => ['required', 'uuid'],
             'comment'    => ['sometimes', 'nullable', 'string', 'min:2'],
             'quantity'   => ['sometimes', 'integer', 'min:1'],
         ];
