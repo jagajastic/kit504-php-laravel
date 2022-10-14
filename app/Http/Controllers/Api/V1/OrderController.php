@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Models\Shop;
 use App\Models\Order;
 use App\Enums\UserType;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\Order\StoreRequest;
 use App\Http\Resources\Api\V1\OrderResource;
-use App\Models\Product;
-use App\Models\Shop;
+use App\Http\Requests\Api\V1\Order\StoreRequest;
 
 class OrderController extends Controller
 {
@@ -53,7 +53,17 @@ class OrderController extends Controller
         $cart = $request->user()->getCart($shop->id);
 
         if (empty($cart)) {
-            return $this->error(\null, 'Your cart for this shop is empty.');
+            return $this->error(
+                \null,
+                'Your cart for this shop is empty.'
+            );
+        }
+
+        if ($shop->opening_hours->isClosed()) {
+            return $this->error(
+                \null,
+                'This shop has not opened.'
+            );
         }
 
         $totalPrice = 0;

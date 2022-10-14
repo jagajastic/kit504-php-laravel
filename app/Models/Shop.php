@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UserType;
 use App\Traits\ModelEssentialsTrait;
+use Spatie\OpeningHours\OpeningHours;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,5 +45,24 @@ class Shop extends Model
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get shop opening/closing hours.
+     */
+    public function getOpeningHoursAttribute(): OpeningHours
+    {
+        $range = [$this->opening_time . '-' . $this->closing_time];
+
+        return OpeningHours::create([
+            'monday'     => $range,
+            'tuesday'    => $range,
+            'wednesday'  => $range,
+            'thursday'   => $range,
+            'friday'     => $range,
+            'saturday'   => $range,
+            'sunday'     => $range,
+            'exceptions' => [],
+        ]);
     }
 }
