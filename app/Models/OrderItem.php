@@ -19,4 +19,12 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+    /**
+     * The product relationship.
+     */
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

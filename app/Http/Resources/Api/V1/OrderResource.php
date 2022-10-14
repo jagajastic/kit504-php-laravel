@@ -20,14 +20,17 @@ class OrderResource extends JsonResource
                 !$this->relationLoaded('user'),
                 $this->user_id,
             ),
-            'user'         => new UserResource($this->whenLoaded('user'), \false),
             'shop_id'      => $this->when(
                 !$this->relationLoaded('shop'),
                 $this->shop_id,
             ),
-            'shop'         => new ShopResource($this->whenLoaded('shop')),
-            'created_at'   => $this->created_at,
-            'updated_at'   => $this->updated_at,
+            'total_price'       => $this->total_price,
+            'total_price_usd'   => $this->total_price_usd,
+            'user'              => new UserResource($this->whenLoaded('user'), \false),
+            'shop'              => new ShopResource($this->whenLoaded('shop')),
+            'items'             => OrderItemResource::collection($this->whenLoaded('items')),
+            'created_at'        => $this->created_at,
+            'updated_at'        => $this->updated_at,
         ];
     }
 }

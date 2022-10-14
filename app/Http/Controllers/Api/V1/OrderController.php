@@ -83,4 +83,14 @@ class OrderController extends Controller
             ]
         );
     }
+
+    /**
+     * Get Order.
+     */
+    public function show(Order $order): JsonResponse
+    {
+        return $this->ok(
+            new OrderResource($order->load(['user', 'shop', 'items'])),
+        );
+    }
 }
