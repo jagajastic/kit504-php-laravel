@@ -96,6 +96,10 @@ class OrderController extends Controller
                 );
             }
 
+            $request->user()->update([
+                'account_balance' => $accountBalance - $totalPrice,
+            ]);
+
             $orderData = $request->safe()
                 ->collect()
                 ->put('total_price', $totalPrice)
@@ -109,10 +113,6 @@ class OrderController extends Controller
             $order->items()->createMany($orderItems);
 
             $request->user()->setCart($shop->id, []);
-
-            $request->user()->update([
-                'account_balance' => $accountBalance - $totalPrice,
-            ]);
 
             return $this->ok(
                 new OrderResource($order),
