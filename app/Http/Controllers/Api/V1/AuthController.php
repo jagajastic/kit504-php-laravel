@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\UserResource;
 use App\Http\Requests\Api\V1\Auth\LoginRequest;
 use App\Http\Requests\Api\V1\Auth\RegisterRequest;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -45,5 +46,13 @@ class AuthController extends Controller
         $user = User::create($request->validated())->refresh();
 
         return $this->ok(new UserResource($user), JsonResponse::HTTP_CREATED);
+    }
+
+    /**
+     * User.
+     */
+    public function user(Request $request): JsonResponse
+    {
+        return $this->ok(new UserResource($request->user(), \false));
     }
 }
