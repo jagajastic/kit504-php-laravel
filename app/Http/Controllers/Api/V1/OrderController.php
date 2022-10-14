@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\OrderResource;
 use App\Http\Requests\Api\V1\Order\StoreRequest;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -49,65 +50,79 @@ class OrderController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        $shop = Shop::findOrFail($request->shop_id);
-        $cart = $request->user()->getCart($shop->id);
+        return DB::transaction(function () use ($request) {
+            $shop = Shop::findOrFail($request->shop_id);
+            $cart = $request->user()->getCart($shop->id);
 
-        if (empty($cart)) {
-            return $this->error(
-                \null,
-                'Your cart for this shop is empty.'
-            );
-        }
-
-        if ($shop->opening_hours->isClosed()) {
-            return $this->error(
-                \null,
-                'This shop has not opened.'
-            );
-        }
-
-        $totalPrice = 0;
-        $orderItems = [];
-
-        foreach ($cart as $cartItem) {
-            $product = Product::find($cartItem['id']);
-
-            if ($product !== \null) {
-                $orderItems[] = [
-                    'product_id'    => $product->id,
-                    'product_price' => $product->price,
-                    'product_name'  => $product->name,
-                    'product_image' => $product->getRawOriginal('image'),
-                    'comment'       => $cartItem['comment'],
-                    'quantity'      => $cartItem['quantity'],
-                ];
-
-                $totalPrice += $product->price * $cartItem['quantity'];
+            if (empty($cart)) {
+                return $this->error(
+                    \null,
+                    'Your cart for this shop is empty.'
+                );
             }
-        }
 
-        $orderData = $request->safe()
-            ->collect()
-            ->put('total_price', $totalPrice)
-            ->toArray();
+            if ($shop->opening_hours->isClosed()) {
+                return $this->error(
+                    \null,
+                    'This shop has not opened.'
+                );
+            }
 
-        $order = $request->user()
-            ->orders()
-            ->create($orderData)
-            ->refresh();
+            $totalPrice     = 0;
+            $orderItems     = [];
+            $accountBalance = $request->user()->account_balance;
 
-        $order->items()->createMany($orderItems);
+            foreach ($cart as $cartItem) {
+                $product = Product::find($cartItem['id']);
 
-        $request->user()->setCart($shop->id, []);
+                if ($product !== \null) {
+                    $orderItems[] = [
+                        'product_id'    => $product->id,
+                        'product_price' => $product->price,
+                        'product_name'  => $product->name,
+                        'product_image' => $product->getRawOriginal('image'),
+                        'comment'       => $cartItem['comment'],
+                        'quantity'      => $cartItem['quantity'],
+                    ];
 
-        return $this->ok(
-            new OrderResource($order),
-            JsonResponse::HTTP_CREATED,
-            'Order created.',
-            [
-                'Location' => \action([$this::class, 'show'], $order),
-            ]
-        );
+                    $totalPrice += $product->price * $cartItem['quantity'];
+                }
+            }
+
+            if ($accountBalance < $totalPrice) {
+                return $this->error(
+                    \null,
+                    'Insufficient funds.'
+                );
+            }
+
+            $orderData = $request->safe()
+                ->collect()
+                ->put('total_price', $totalPrice)
+                ->toArray();
+
+            $order = $request->user()
+                ->orders()
+                ->create($orderData)
+                ->refresh();
+
+            $order->items()->createMany($orderItems);
+
+            $request->user()->setCart($shop->id, []);
+
+            $request->user()->update([
+                'account_balance' => $accountBalance - $totalPrice,
+            ]);
+
+            return $this->ok(
+                new OrderResource($order),
+                JsonResponse::HTTP_CREATED,
+                'Order created.',
+                [
+                    'Location' => \action([$this::class, 'show'], $order),
+                ]
+            );
+        });
     }
 
     /**
