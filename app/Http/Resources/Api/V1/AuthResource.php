@@ -8,6 +8,18 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class AuthResource extends JsonResource
 {
+    protected bool $generateToken;
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct($resource, $generateToken = \true)
+    {
+        parent::__construct($resource);
+
+        $this->generateToken = $generateToken;
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -16,10 +28,6 @@ class AuthResource extends JsonResource
      */
     public function toArray($request)
     {
-        $uuid = Str::orderedUuid()->toString();
-
-        $this->apiTokens()->create(['value' => $uuid]);
-
         $can_order = \in_array(
             $this->type,
             [UserType::SHOP_STAFF, UserType::UTAS_EMPLOYEE, UserType::UTAS_STUDENT]
@@ -27,7 +35,16 @@ class AuthResource extends JsonResource
 
         return  [
             'id'              => $this->id,
-            'api_token'       => $uuid,
+            'api_token'       => $this->when(
+                $this->generateToken,
+                function () {
+                    $uuid = Str::orderedUuid()->toString();
+
+                    $this->apiTokens()->create(['value' => $uuid]);
+
+                    return $uuid;
+                }
+            ),
             'first_name'      => $this->first_name,
             'last_name'       => $this->last_name,
             'type'            => $this->type,

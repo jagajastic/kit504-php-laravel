@@ -16,6 +16,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CartController;
+use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\ShopController;
 use App\Http\Middleware\UserTypeMiddleware;
@@ -72,4 +73,16 @@ Route::prefix('products')
         $router->get('/{product}', [ProductController::class, 'show'])->name('show');
         $router->patch('/{product}', [ProductController::class, 'update'])->name('update');
         $router->delete('/{product}', [ProductController::class, 'destroy'])->name('destroy');
+    });
+
+// Order Routes.
+Route::prefix('orders')
+    ->name('orders.')
+    ->middleware(['auth:api'])
+    ->group(function (Router $router) {
+        $router->get('/', [OrderController::class, 'index'])->name('index');
+        $router->post('/', [OrderController::class, 'store'])->name('store');
+        $router->get('/{order}', [OrderController::class, 'show'])->name('show');
+        $router->patch('/{order}', [OrderController::class, 'update'])->name('update');
+        $router->delete('/{order}', [OrderController::class, 'destroy'])->name('destroy');
     });

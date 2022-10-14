@@ -6,9 +6,9 @@ use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\V1\CartItemResource;
 use App\Http\Requests\Api\V1\Cart\StoreRequest;
 use App\Http\Requests\Api\V1\Cart\UpdateRequest;
-use App\Http\Resources\V1\CartItemResource;
 
 class CartController extends Controller
 {
