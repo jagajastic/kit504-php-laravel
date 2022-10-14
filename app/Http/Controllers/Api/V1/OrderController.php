@@ -60,13 +60,17 @@ class OrderController extends Controller
             ->create($request->validated())
             ->refresh();
 
-        foreach ($cart as $cartItem) {
-            $order->items()->create([
-                'product_id' => $cartItem['id'],
-                'comment'    => $cartItem['comment'],
-                'quantity'   => $cartItem['quantity'],
-            ]);
-        }
+        $order->items()->createMany(
+            \collect($cart)
+                ->map(function ($cartItem) {
+                    return [
+                        'product_id' => $cartItem['id'],
+                        'comment'    => $cartItem['comment'],
+                        'quantity'   => $cartItem['quantity'],
+                    ];
+                })
+                ->toArray()
+        );
 
         $request->user()->setCart($shop->id, []);
 

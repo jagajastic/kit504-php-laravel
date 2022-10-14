@@ -14,12 +14,12 @@
 use App\Enums\UserType;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\UserTypeMiddleware;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CartController;
+use App\Http\Controllers\Api\V1\ShopController;
 use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\ProductController;
-use App\Http\Controllers\Api\V1\ShopController;
-use App\Http\Middleware\UserTypeMiddleware;
 
 // Authentication Routes.
 Route::prefix('auth')->name('auth.')->group(function (Router $router) {
@@ -82,7 +82,13 @@ Route::prefix('orders')
     ->middleware(['auth:api'])
     ->group(function (Router $router) {
         $router->get('/', [OrderController::class, 'index'])->name('index');
-        $router->post('/', [OrderController::class, 'store'])->name('store');
+        $router->post('/', [OrderController::class, 'store'])->name('store')->middleware(
+            UserTypeMiddleware::make([
+                UserType::SHOP_STAFF,
+                UserType::UTAS_EMPLOYEE,
+                UserType::UTAS_STUDENT,
+            ])
+        );
         $router->get('/{order}', [OrderController::class, 'show'])->name('show');
         $router->patch('/{order}', [OrderController::class, 'update'])->name('update');
         $router->delete('/{order}', [OrderController::class, 'destroy'])->name('destroy');

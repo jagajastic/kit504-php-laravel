@@ -14,6 +14,20 @@ class Order extends Model
     use ModelEssentialsTrait;
 
     /**
+     * Bootstrap the model and its traits.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function (Order $order) {
+            $order->items()->delete();
+        });
+    }
+
+    /**
      * Get order user relationship.
      */
     public function user(): BelongsTo
